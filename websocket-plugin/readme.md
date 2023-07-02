@@ -1,0 +1,3 @@
+- src/lib.rs: entrypoint 
+- src/plugin.rs: main plugin code
+- to run: `cargo build && solana-test-validator -r --geyser-plugin-config config.json`
