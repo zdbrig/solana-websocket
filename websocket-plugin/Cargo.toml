@@ -11,6 +11,7 @@ solana-geyser-plugin-interface = { version = "1.16.0" }
 solana-program = "=1.16.0"
 solana-account-decoder = { version = "1.16.0" }
 websocket = "0.26.5"
+tungstenite = "0.19.0"
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
