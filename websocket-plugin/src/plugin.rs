@@ -1,4 +1,5 @@
 use super::simple_plugin::SimplePlugin;
+use super::remote_communication::send_data;
 use solana_geyser_plugin_interface::geyser_plugin_interface::{
     GeyserPlugin,
     GeyserPluginError,
@@ -57,35 +58,9 @@ impl GeyserPlugin for SimplePlugin {
                     continue;
                 }
 
-                let pk = Pubkey::new(account_info.pubkey);
 
-                let payload = json!({
-                    "pubkey": account_info.pubkey,
-                    "slot": slot,
-                });
+                send_data(&*account_info, slot);
 
-                let handle = std::thread::spawn(move || {
-                    let response = reqwest::blocking::Client::new()
-                        .post("http://localhost:3000/account")
-                        .json(&payload)
-                        .send();
-
-                    match response {
-                        Ok(response) => {
-                            if response.status() == StatusCode::OK {
-                                println!("Request successful!");
-                            } else {
-                                println!("Request failed with status code: {}", response.status());
-                            }
-                        }
-                        Err(err) => {
-                            println!("An error occurred during the request: {}", err);
-                        }
-                    }
-                });
-
-                // Wait for the thread to complete
-                handle.join().unwrap();
             }
         }
         Ok(())
