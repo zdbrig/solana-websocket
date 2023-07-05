@@ -5,7 +5,7 @@ app = Flask(__name__)
 @app.route("/pubkey", methods=["GET"])
 def get_pubkey():
     # Return a sample pubkey for testing purposes
-    return "9eAsY68jFRThJdu19oB2KwaVCXC4YvsQi8kn8L9NqZWf"
+    return "HTCLMaMHg7rHGkrUHzxKGS2g71EEN5aVjGYrBujgE5dY"
 
 @app.route("/account", methods=["POST"])
 def receive_account_update():

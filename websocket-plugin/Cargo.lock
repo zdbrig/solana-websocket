@@ -1265,6 +1265,7 @@ dependencies = [
  "solana-account-decoder",
  "solana-geyser-plugin-interface",
  "solana-program",
+ "tokio",
  "tungstenite",
  "websocket",
 ]

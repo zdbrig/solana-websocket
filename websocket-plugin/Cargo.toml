@@ -14,6 +14,7 @@ websocket = "0.26.5"
 tungstenite = "0.19.0"
 reqwest = "0.11"
 serde_json = "1.0.100"
+tokio = "1.29.1"
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]
