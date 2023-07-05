@@ -5,14 +5,16 @@ use reqwest::Client;
 use std::str::FromStr;
 use std::time::Duration;
 use reqwest::StatusCode;
+use crate::constants::PUBKEY_URL;
+use crate::constants::REFRESH_INTERVAL;
 
 pub async fn start_refresher(pubkeys: Arc<Mutex<Vec<Option<Pubkey>>>>) {
     let client = Client::new();
 
     loop {
-        tokio::time::sleep(Duration::from_secs(2)).await;
+        tokio::time::sleep(Duration::from_secs(REFRESH_INTERVAL)).await;
 
-        let response = client.get("http://localhost:3000/pubkey").send().await;
+        let response = client.get(PUBKEY_URL).send().await;
 
         if let Ok(response) = response {
             if response.status().is_success() {

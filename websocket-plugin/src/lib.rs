@@ -2,6 +2,7 @@ mod plugin;
 mod simple_plugin;
 mod refresh;
 mod remote_communication;
+mod constants;
 pub use simple_plugin::SimplePlugin;
 
 use solana_geyser_plugin_interface::geyser_plugin_interface::GeyserPlugin;

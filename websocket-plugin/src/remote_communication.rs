@@ -3,6 +3,7 @@ use serde_json::json;
 use solana_program::pubkey::Pubkey;
 use reqwest::StatusCode;
 use std::thread;
+use crate::constants::ACCOUNT_URL;
 
 pub fn send_data(account_info: &ReplicaAccountInfoV3, slot: u64) {
     let pk = Pubkey::new(account_info.pubkey);
@@ -14,7 +15,7 @@ pub fn send_data(account_info: &ReplicaAccountInfoV3, slot: u64) {
 
     let handle = thread::spawn(move || {
         let response = reqwest::blocking::Client::new()
-            .post("http://localhost:3000/account")
+            .post(ACCOUNT_URL)
             .json(&payload)
             .send();
 
