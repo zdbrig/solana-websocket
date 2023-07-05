@@ -26,7 +26,6 @@ pub async fn start_refresher(pubkeys: Arc<Mutex<Vec<Option<Pubkey>>>>) {
                     for pubkey_str in pubkeys_str {
                         if let Ok(new_pubkey) = Pubkey::from_str(&pubkey_str) {
                             pubkeys_guard.push(Some(new_pubkey));
-                            println!("Refreshed pubkey to: {}", new_pubkey);
                         }
                     }
                 }

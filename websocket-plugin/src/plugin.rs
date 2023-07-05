@@ -13,7 +13,7 @@ use reqwest::StatusCode;
 
 impl GeyserPlugin for SimplePlugin {
     fn name(&self) -> &'static str {
-        "simple-geyser"
+        "account-tracker"
     }
 
 
