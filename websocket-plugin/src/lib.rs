@@ -1,7 +1,10 @@
-use solana_geyser_plugin_interface::geyser_plugin_interface::GeyserPlugin;
-
 mod plugin;
-pub use plugin::SimplePlugin;
+mod simple_plugin;
+mod refresh;
+
+pub use simple_plugin::SimplePlugin;
+
+use solana_geyser_plugin_interface::geyser_plugin_interface::GeyserPlugin;
 
 #[no_mangle]
 #[allow(improper_ctypes_definitions)]

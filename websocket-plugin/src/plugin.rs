@@ -1,3 +1,4 @@
+use super::simple_plugin::SimplePlugin;
 use solana_geyser_plugin_interface::geyser_plugin_interface::{
     GeyserPlugin,
     GeyserPluginError,
@@ -5,75 +6,15 @@ use solana_geyser_plugin_interface::geyser_plugin_interface::{
     Result as PluginResult,
 };
 use solana_program::pubkey::Pubkey;
-use std::sync::Arc;
-use std::sync::Mutex;
 use std::error::Error;
-use std::str::FromStr;
-use reqwest::Client;
-use std::thread;
-use std::time::Duration;
 use serde_json::json;
 use reqwest::StatusCode;
-
-#[derive(Debug)]
-pub struct SimplePlugin {
-    pubkeys: Arc<Mutex<Vec<Option<Pubkey>>>>,
-}
-
-impl Default for SimplePlugin {
-    fn default() -> Self {
-        let pubkeys = Arc::new(Mutex::new(Vec::new()));
-        let cloned_pubkeys = Arc::clone(&pubkeys);
-
-        thread::spawn(move || {
-            let rt = tokio::runtime::Runtime::new().unwrap();
-            rt.block_on(async {
-                SimplePlugin::start_refresher(cloned_pubkeys).await;
-            });
-        });
-
-        SimplePlugin { pubkeys }
-    }
-}
-
-impl SimplePlugin {
-    async fn start_refresher(pubkeys: Arc<Mutex<Vec<Option<Pubkey>>>>) {
-        let client = Client::new();
-
-        loop {
-            tokio::time::sleep(Duration::from_secs(2)).await;
-
-            let response = client.get("http://localhost:3000/pubkey").send().await;
-
-            if let Ok(response) = response {
-                if response.status().is_success() {
-                    if let Ok(pubkeys_str) = response.text().await {
-                        let pubkeys_str = pubkeys_str.trim().split(',').map(|s| s.to_string()).collect::<Vec<String>>();
-
-                        let mut pubkeys_guard = pubkeys.lock().unwrap();
-                        pubkeys_guard.clear();
-                        for pubkey_str in pubkeys_str {
-                            println!("new pubkey {}", pubkey_str);
-                            if let Ok(new_pubkey) = Pubkey::from_str(&pubkey_str) {
-                                pubkeys_guard.push(Some(new_pubkey));
-                                println!("Refreshed pubkey to: {}", new_pubkey);
-                            }
-                        }
-                    }
-                } else {
-                    println!("Failed to fetch new pubkeys: HTTP request was not successful");
-                }
-            } else {
-                println!("Failed to fetch new pubkeys: Error making HTTP request");
-            }
-        }
-    }
-}
 
 impl GeyserPlugin for SimplePlugin {
     fn name(&self) -> &'static str {
         "simple-geyser"
     }
+
 
     fn on_load(&mut self, _config_file: &str) -> PluginResult<()> {
         Ok(())
@@ -123,7 +64,7 @@ impl GeyserPlugin for SimplePlugin {
                     "slot": slot,
                 });
 
-                let handle = thread::spawn(move || {
+                let handle = std::thread::spawn(move || {
                     let response = reqwest::blocking::Client::new()
                         .post("http://localhost:3000/account")
                         .json(&payload)
