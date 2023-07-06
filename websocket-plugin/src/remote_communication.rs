@@ -4,13 +4,15 @@ use solana_program::pubkey::Pubkey;
 use reqwest::StatusCode;
 use std::thread;
 use crate::constants::ACCOUNT_URL;
+use base64::encode;
 
 pub fn send_data(account_info: &ReplicaAccountInfoV3, slot: u64) {
     let pk = Pubkey::new(account_info.pubkey);
+    let encoded_data = encode(&account_info.data);
 
     let payload = json!({
         "pubkey": pk.to_string(),
-        "slot": slot,
+        "data": encoded_data
     });
 
     let handle = thread::spawn(move || {
