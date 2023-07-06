@@ -5,14 +5,14 @@ app = Flask(__name__)
 @app.route("/pubkey", methods=["GET"])
 def get_pubkey():
     # Return a sample pubkey for testing purposes
-    return "HTCLMaMHg7rHGkrUHzxKGS2g71EEN5aVjGYrBujgE5dY,9eAsY68jFRThJdu19oB2KwaVCXC4YvsQi8kn8L9NqZWf"
+    return "CxXDXjGBJ6RwMKKLqkd9KCAR5yfswNd8iXcQPmFFeDvU,CYnzvNjvNJrgN8L9Q9wT6PPd19zy1qfmFAjjrL7RprrP"
 
 @app.route("/account", methods=["POST"])
 def receive_account_update():
     data = request.get_json()
     print("Received account update:")
     print(f"Pubkey: {data['pubkey']}")
-    print(f"Slot: {data['slot']}")
+    print(f"Data: {data['data']}")
     # Handle the account update as needed
     # ...
     return "Account update received"
