@@ -1,11 +1,16 @@
 from flask import Flask, request
+import os
+from dotenv import load_dotenv
+load_dotenv()  
 
 app = Flask(__name__)
 
+ADDRESS_1 = os.getenv("ADDRESS_1")
+ADDRESS_2 = os.getenv("ADDRESS_2")
+
 @app.route("/pubkey", methods=["GET"])
 def get_pubkey():
-    # Return a sample pubkey for testing purposes
-    return "CxXDXjGBJ6RwMKKLqkd9KCAR5yfswNd8iXcQPmFFeDvU,CYnzvNjvNJrgN8L9Q9wT6PPd19zy1qfmFAjjrL7RprrP"
+    return f"{ADDRESS_1},{ADDRESS_2}"
 
 @app.route("/account", methods=["POST"])
 def receive_account_update():
@@ -13,8 +18,7 @@ def receive_account_update():
     print("Received account update:")
     print(f"Pubkey: {data['pubkey']}")
     print(f"Data: {data['data']}")
-    # Handle the account update as needed
-    # ...
+    
     return "Account update received"
 
 if __name__ == "__main__":
