@@ -24,7 +24,7 @@ impl GeyserPlugin for SimplePlugin {
     fn on_unload(&mut self) {}
 
     fn update_account(
-        &self,
+        &mut self,
         account: ReplicaAccountInfoVersions,
         slot: u64,
         _is_startup: bool
@@ -37,14 +37,8 @@ impl GeyserPlugin for SimplePlugin {
                     )
                 );
             }
-            ReplicaAccountInfoVersions::V0_0_2(_) => {
-                return Err(
-                    GeyserPluginError::Custom(
-                        Box::<dyn Error + Send + Sync>::from("Some error message for V0_0_2")
-                    )
-                );
-            }
-            ReplicaAccountInfoVersions::V0_0_3(account_info) => account_info,
+            
+            ReplicaAccountInfoVersions::V0_0_2(account_info) => account_info,
         };
 
         let pubkeys_guard = self.pubkeys.lock().unwrap();
@@ -66,7 +60,7 @@ impl GeyserPlugin for SimplePlugin {
         Ok(())
     }
 
-    fn notify_end_of_startup(&self) -> PluginResult<()> {
+    fn notify_end_of_startup(&mut self) -> PluginResult<()> {
         Ok(())
     }
 

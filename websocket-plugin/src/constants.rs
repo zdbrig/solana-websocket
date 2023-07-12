@@ -1,6 +1,6 @@
 
 
 
-pub const PUBKEY_URL: &str = "https://tracker.novafi.xyz/pubkey";
-pub const ACCOUNT_URL: &str = "https://tracker.novafi.xyz/account";
-pub const REFRESH_INTERVAL:u64 = 120;
+pub const PUBKEY_URL: &str = "http://localhost:3000/pubkey";
+pub const ACCOUNT_URL: &str = "http://localhost:3000/account";
+pub const REFRESH_INTERVAL:u64 = 2;

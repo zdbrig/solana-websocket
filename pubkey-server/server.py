@@ -5,8 +5,8 @@ load_dotenv()
 
 app = Flask(__name__)
 
-ADDRESS_1 = os.getenv("ADDRESS_1")
-ADDRESS_2 = os.getenv("ADDRESS_2")
+ADDRESS_1 = "9eAsY68jFRThJdu19oB2KwaVCXC4YvsQi8kn8L9NqZWf"
+ADDRESS_2 = "9eAsY68jFRThJdu19oB2KwaVCXC4YvsQi8kn8L9NqZWf"
 
 @app.route("/pubkey", methods=["GET"])
 def get_pubkey():
