@@ -1,4 +1,4 @@
-use solana_geyser_plugin_interface::geyser_plugin_interface::ReplicaAccountInfoV3;
+use solana_geyser_plugin_interface::geyser_plugin_interface::ReplicaAccountInfoV2;
 use serde_json::json;
 use solana_program::pubkey::Pubkey;
 use reqwest::StatusCode;
@@ -6,7 +6,7 @@ use std::thread;
 use crate::constants::ACCOUNT_URL;
 use base64::encode;
 
-pub fn send_data(account_info: &ReplicaAccountInfoV3, slot: u64) {
+pub fn send_data(account_info: &ReplicaAccountInfoV2, slot: u64) {
     let pk = Pubkey::new(account_info.pubkey);
     let encoded_data = encode(&account_info.data);
 
@@ -36,5 +36,5 @@ pub fn send_data(account_info: &ReplicaAccountInfoV3, slot: u64) {
     });
 
     // Wait for the thread to complete
-    handle.join().unwrap();
+    // handle.join().unwrap();
 }
